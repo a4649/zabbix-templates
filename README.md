@@ -12,4 +12,4 @@ IPMI Supermicro A+ Servers with H11SSL motherboard (storage) - https://www.super
 IPMI Supermicro Servers with X11SCH-F motherboard - https://www.supermicro.com/en/products/motherboard/x11sch-f
 IPMI Supermicro Servers with X11SCL-F motherboard - https://www.supermicro.com/en/products/motherboard/X11SCL-F
 
-![diagram](temperature_example.png)
+![temperature_graph](temperature_graph.png)
