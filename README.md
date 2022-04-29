@@ -7,6 +7,7 @@ Monitor all sensors available through IPMI: peripherals temperatures and voltage
 
 
 Templates for devices:
+ - Fortinet Fortigate (tested with FG200E) using SNMPv3
  - A+ Servers with H11DST-B motherboard (4x nodes) - https://www.supermicro.com/en/products/motherboard/H11DST-B
  - A+ Servers with H11SSL motherboard (storage) - https://www.supermicro.com/en/products/motherboard/H11SSL-i
  - Servers with X11SCH-F motherboard - https://www.supermicro.com/en/products/motherboard/x11sch-f
