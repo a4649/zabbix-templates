@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>6.0</version>
+    <date>2023-03-07T14:25:48Z</date>
+    <media_types>
+        <media_type>
+            <name>Mattermost Webhook</name>
+            <type>WEBHOOK</type>
+            <parameters>
+                <parameter>
+                    <name>message</name>
+                    <value>{ALERT.MESSAGE}</value>
+                </parameter>
+                <parameter>
+                    <name>subject</name>
+                    <value>{ALERT.SUBJECT}</value>
+                </parameter>
+            </parameters>
+            <script>try {
+    var params = JSON.parse(value),
+        req = new HttpRequest(),
+        message = params.subject + '\n' + params.message,
+        resp;
+
+    req.addHeader('Content-Type: application/json');
+    resp = req.post('https://url.token',JSON.stringify({&quot;text&quot;:message}));
+    return req.getStatus();
+}
+catch (error) {
+    Zabbix.log(3, '[ Mattermost webhook ] issue creation failed : ' + error);
+    throw 'Failed with error: ' + error;
+}</script>
+            <message_templates>
+                <message_template>
+                    <event_source>TRIGGERS</event_source>
+                    <operation_mode>PROBLEM</operation_mode>
+                    <subject>PROBLEM on {HOST.NAME}: {EVENT.NAME} :warning:</subject>
+                    <message>Problem started at {EVENT.TIME} on {EVENT.DATE}
+Problem name: {EVENT.NAME}
+Host: {HOST.NAME}
+Severity: {EVENT.SEVERITY}
+Operational data: {EVENT.OPDATA}
+Original problem ID: {EVENT.ID}
+
+{TRIGGER.DESCRIPTION}
+</message>
+                </message_template>
+                <message_template>
+                    <event_source>TRIGGERS</event_source>
+                    <operation_mode>RECOVERY</operation_mode>
+                    <subject>RESOLVED in {HOST.NAME} {EVENT.DURATION}: {EVENT.NAME} :white_check_mark:</subject>
+                    <message>Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+Problem name: {EVENT.NAME}
+Problem duration: {EVENT.DURATION}
+Host: {HOST.NAME}
+Severity: {EVENT.SEVERITY}
+Original problem ID: {EVENT.ID}
+{TRIGGER.URL}</message>
+                </message_template>
+            </message_templates>
+        </media_type>
+    </media_types>
+</zabbix_export>
